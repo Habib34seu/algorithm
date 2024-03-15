@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    struct Node *next;
+}*first = NULL,*second = NULL, *third = NULL;
+
+int CountLinkedList(struct Node *p)
+{
+    int count =0;
+    
+    while(p)
+    {
+        count = count+1;
+        p=p->next;
+    }
+    
+    return count;
+}
+void InsertLinkedList(struct Node *p, int index, int x)
+{
+    struct Node *t;
+    if(index < 0 || index > CountLinkedList(p)) return;
+    
+    t = new Node();
+    t->data = x;
+    
+    if(index ==0)
+    {
+        t->next = first;
+        first = t;
+    }
+    else
+    {
+        for(int i=0; i<index-1; i++)
+        {
+            p = p->next;
+        }
+        t->next = p->next;
+        p->next = t;
+    }
+    
+}
+
+
+int isLoop(struct Node *f)
+{
+    struct Node *p,*q;
+    p=q=f;
+    do
+    {
+        p = p -> next;
+        q = q -> next;
+        q = q ? q -> next : q;
+        
+    }while(p && q && p!=q);
+    if(p==q) return 1;
+    else return 0;
+    
+}
+
+
+void DisplayLinkedList(struct Node *p)
+{
+    while (p)
+    {
+        cout<<p->data <<" ";
+        p=p->next;
+    }
+}
+
+
+int main() {
+   
+   struct Node *t1, *t2;
+   InsertLinkedList (first,0,1); 
+   InsertLinkedList (first,1,3); 
+   InsertLinkedList (first,2,5); 
+   InsertLinkedList (first,3,7); 
+   InsertLinkedList (first,4,9); 
+
+   DisplayLinkedList(first);
+   cout<<endl;
+   
+  t1 = first -> next-> next;
+  t2 = first ->next -> next-> next-> next;
+  t2->next = t1;
+   
+   cout<<"is Loop : "<<isLoop(first);
+    return 0;
+}
